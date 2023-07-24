@@ -10,5 +10,7 @@ class Job (
         val description: String,
         val jobType: String,
         val jobPostDate: String,
-        val location: String
+        val location: String,
+        val companyDetails: String,
+        val imageUrl:String
 )
