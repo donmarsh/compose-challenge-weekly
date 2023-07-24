@@ -20,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.marshsoft.jobsearch.ui.theme.JobSearchTheme
+import org.marshsoft.jobsearch.views.HomeScreen
 import org.marshsoft.jobsearch.views.MainScreen
 
 class MainActivity : ComponentActivity() {
@@ -62,6 +63,7 @@ fun NavHostContainer(navController: NavHostController, padding: PaddingValues) {
         modifier = Modifier.padding(paddingValues = padding),
     ){
         composable("home") {
+            HomeScreen()
         }
         composable("bookmark") {
 
