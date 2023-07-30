@@ -1,8 +1,6 @@
 package org.marshsoft.jobsearch
 
-import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,13 +12,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import org.marshsoft.jobsearch.ui.theme.JobSearchTheme
 import org.marshsoft.jobsearch.views.HomeScreen
+import org.marshsoft.jobsearch.views.JobDetailsScreen
 import org.marshsoft.jobsearch.views.MainScreen
 
 class MainActivity : ComponentActivity() {
@@ -63,7 +62,7 @@ fun NavHostContainer(navController: NavHostController, padding: PaddingValues) {
         modifier = Modifier.padding(paddingValues = padding),
     ){
         composable("home") {
-            HomeScreen()
+            HomeScreen(navController)
         }
         composable("bookmark") {
 
@@ -72,6 +71,16 @@ fun NavHostContainer(navController: NavHostController, padding: PaddingValues) {
 
         }
         composable("profile") {
+
+        }
+        composable("jobDetails/{jobId}",arguments = listOf(navArgument("jobId") {
+            type = NavType.StringType
+        })){
+            val jobId = it.arguments?.getString("jobId")
+            jobId?.let {
+                JobDetailsScreen(jobId = jobId )
+
+            }
 
         }
 

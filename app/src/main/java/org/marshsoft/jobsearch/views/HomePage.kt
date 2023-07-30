@@ -4,13 +4,11 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,7 +35,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -84,7 +81,7 @@ import org.marshsoft.jobsearch.ui.theme.GreyText
 import org.marshsoft.jobsearch.ui.theme.MainPurple
 
 @Composable
-fun JobCardItem(job: Job){
+fun JobCardItem(job: Job, navController: NavHostController){
     var favorite by remember {
         mutableStateOf(false) // initially checked
     }
@@ -117,11 +114,12 @@ fun JobCardItem(job: Job){
                         contentDescription = "star",
                         modifier = Modifier
                             .width(16.dp)
-                            .height(16.dp).padding(end = 2.dp))
+                            .height(16.dp)
+                            .padding(end = 2.dp))
                     Text(job.rating, modifier = Modifier
-                                    .height(24.dp).
-                                    width(24.dp).
-                        wrapContentHeight(align = Alignment.CenterVertically),
+                        .height(24.dp)
+                        .width(24.dp)
+                        .wrapContentHeight(align = Alignment.CenterVertically),
                         style = TextStyle(fontSize = 16.sp,
                             fontFamily = FontFamily(Font(R.font.poppins)),
                             fontWeight = FontWeight(500),
@@ -137,11 +135,10 @@ fun JobCardItem(job: Job){
                 TextWithIcon(imageVector = Icons.Filled.HourglassFull , text = job.jobType, color = GreyText)
             }
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
-                Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(containerColor = MainPurple, contentColor = Color.White)) {
+                Button(onClick = { navController.navigate("jobDetails/${job.id}") }, colors = ButtonDefaults.buttonColors(containerColor = MainPurple, contentColor = Color.White)) {
                     Text("Apply now")
                 }
-                IconToggleButton(checked = favorite, onCheckedChange = {_favorite->favorite = _favorite})
-
+                IconToggleButton(checked = favorite, onCheckedChange = {favorite = it})
                 {
                     Icon(imageVector = if(favorite)Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
                         contentDescription = "Bookmark icon",
@@ -184,12 +181,12 @@ fun TextWithIcon(imageVector:ImageVector, text:String, color: Color)
 
 }
 @Composable
-fun JobCardList(jobs:List<Job>){
+fun JobCardList(jobs:List<Job>, navController: NavHostController){
     LazyRow(modifier = Modifier
         .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp)){
         items(jobs){job->
-            JobCardItem(job = job)
+            JobCardItem(job = job, navController)
 
         }
     }
@@ -271,7 +268,7 @@ fun MainScreen(){
 
 }
 @Composable
-fun HomeScreen(){
+fun HomeScreen(navController: NavHostController) {
     var value by remember {
         mutableStateOf("")
     }
@@ -327,13 +324,21 @@ fun HomeScreen(){
             location = "Gurugram, Haryana",
             jobTitle = "Swift Developer",
             companyDetails = "Company Details", jobType = "Full Time", description = "description",
-            jobPostDate = "2 days ago", rating = "4.5", imageUrl = "https://res.cloudinary.com/ds8ursyfi/image/upload/v1690368712/jobs/swift.png")
+            companyName = "Cisco",
+            jobPostDate = "2 days ago",
+            rating = "4.5",
+            favorite = false,
+            imageUrl = "https://res.cloudinary.com/ds8ursyfi/image/upload/v1690368712/jobs/swift.png")
         val secondJob = Job(id = 2,
             location = "Delhi, New Delhi",
             jobTitle = "C Sharp Developer",
             companyDetails = "Company Details", jobType = "Full Time", description = "description",
-            jobPostDate = "2 days ago", rating = "4.4", imageUrl = "https://res.cloudinary.com/ds8ursyfi/image/upload/v1690368732/jobs/Group_1286csharpicon.png")
-        JobCardList(arrayListOf(firstJob, secondJob))
+            companyName = "InfoSys",
+            jobPostDate = "2 days ago",
+            rating = "4.4",
+            favorite = false,
+            imageUrl = "https://res.cloudinary.com/ds8ursyfi/image/upload/v1690368732/jobs/Group_1286csharpicon.png")
+        JobCardList(arrayListOf(firstJob, secondJob), navController)
 
     }
 }

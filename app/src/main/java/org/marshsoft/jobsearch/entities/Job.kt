@@ -11,7 +11,9 @@ class Job (
         val jobType: String,
         val jobPostDate: String,
         val location: String,
+        val companyName: String,
         val companyDetails: String,
         val rating: String,
-        val imageUrl:String
+        val imageUrl:String,
+        val favorite: Boolean
 )
