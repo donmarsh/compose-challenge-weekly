@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -84,11 +85,14 @@ fun JobCardItem(job: Job, navController: NavHostController){
     var favorite by remember {
         mutableStateOf(false) // initially checked
     }
-    Box(modifier = Modifier
+    Box( modifier = Modifier
         .clip(RoundedCornerShape(8.dp))
         .background(CardPurple)
         .width(IntrinsicSize.Max)
-        .padding(5.dp))
+        .padding(5.dp)
+        .clickable {
+            navController.navigate("jobDetails/${job.id}")
+        })
     {
         Column(modifier = Modifier.width(IntrinsicSize.Max))
         {
@@ -134,7 +138,7 @@ fun JobCardItem(job: Job, navController: NavHostController){
                 TextWithIcon(imageVector = Icons.Filled.HourglassFull , text = job.jobType, color = GreyText)
             }
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
-                Button(onClick = { navController.navigate("jobDetails/${job.id}") }, colors = ButtonDefaults.buttonColors(containerColor = MainPurple, contentColor = Color.White)) {
+                Button(onClick = { navController.navigate("upload_resume") }, colors = ButtonDefaults.buttonColors(containerColor = MainPurple, contentColor = Color.White)) {
                     Text("Apply now")
                 }
                 IconToggleButton(checked = favorite, onCheckedChange = {favorite = it})
@@ -145,12 +149,8 @@ fun JobCardItem(job: Job, navController: NavHostController){
 
                 }
             }
-
-                
-            }
-
-
         }
+    }
 
 
 }
@@ -260,7 +260,7 @@ fun MainScreen(navController: NavHostController){
 
     Scaffold(
         topBar = { TopBar() },
-        content = {NavHostContainer(navController = navController)},
+        content = { HomeScreen(navController = navController)},
         bottomBar = {BottomNavigationBar(navController = navController)}
 
     )

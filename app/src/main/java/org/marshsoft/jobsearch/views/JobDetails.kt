@@ -219,7 +219,6 @@ fun JobDetailsScreen(job:Job, innerPadding:PaddingValues, mainActivityViewModel:
         Button(onClick = { /*TODO*/ },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(35.dp)
                 .clip(RoundedCornerShape(30.dp)),
             colors = ButtonDefaults.buttonColors(
             contentColor = Color.White, containerColor = MainPurple))

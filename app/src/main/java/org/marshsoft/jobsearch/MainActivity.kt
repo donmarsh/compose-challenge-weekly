@@ -23,6 +23,8 @@ import org.marshsoft.jobsearch.ui.theme.JobSearchTheme
 import org.marshsoft.jobsearch.viewmodels.MainActivityViewModel
 import org.marshsoft.jobsearch.views.HomeScreen
 import org.marshsoft.jobsearch.views.JobDetails
+import org.marshsoft.jobsearch.views.MainScreen
+import org.marshsoft.jobsearch.views.UploadResume
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +67,7 @@ fun NavHostContainer(navController: NavHostController) {
         startDestination = "home",
     ){
         composable("home") {
-            HomeScreen(navController)
+            MainScreen(navController)
         }
         composable("bookmark") {
 
@@ -85,6 +87,9 @@ fun NavHostContainer(navController: NavHostController) {
 
             }
 
+        }
+        composable("upload_resume") {
+            UploadResume()
         }
 
 
