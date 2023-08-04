@@ -69,7 +69,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import org.marshsoft.jobsearch.NavHostContainer
@@ -257,11 +256,11 @@ fun BottomNavigationBar(navController:NavHostController){
     }
 }
 @Composable
-fun MainScreen(){
-    val navController = rememberNavController()
+fun MainScreen(navController: NavHostController){
+
     Scaffold(
         topBar = { TopBar() },
-        content = {innerPadding->NavHostContainer(navController = navController, padding = innerPadding)},
+        content = {NavHostContainer(navController = navController)},
         bottomBar = {BottomNavigationBar(navController = navController)}
 
     )
@@ -323,7 +322,7 @@ fun HomeScreen(navController: NavHostController) {
         val firstJob = Job(id = 1,
             location = "Gurugram, Haryana",
             jobTitle = "Swift Developer",
-            companyDetails = "Company Details", jobType = "Full Time", description = "description",
+            companyDetails = "Company Details", jobType = "Full Time", jobDescription = "description",
             companyName = "Cisco",
             jobPostDate = "2 days ago",
             rating = "4.5",
@@ -332,7 +331,7 @@ fun HomeScreen(navController: NavHostController) {
         val secondJob = Job(id = 2,
             location = "Delhi, New Delhi",
             jobTitle = "C Sharp Developer",
-            companyDetails = "Company Details", jobType = "Full Time", description = "description",
+            companyDetails = "Company Details", jobType = "Full Time", jobDescription = "description",
             companyName = "InfoSys",
             jobPostDate = "2 days ago",
             rating = "4.4",

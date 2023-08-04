@@ -3,36 +3,40 @@ package org.marshsoft.jobsearch
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import org.marshsoft.jobsearch.ui.theme.JobSearchTheme
+import org.marshsoft.jobsearch.viewmodels.MainActivityViewModel
 import org.marshsoft.jobsearch.views.HomeScreen
-import org.marshsoft.jobsearch.views.JobDetailsScreen
-import org.marshsoft.jobsearch.views.MainScreen
+import org.marshsoft.jobsearch.views.JobDetails
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             JobSearchTheme {
+                val navController = rememberNavController()
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    NavHostContainer(navController = rememberNavController())
                 }
             }
         }
@@ -55,11 +59,10 @@ fun GreetingPreview() {
     }
 }
 @Composable
-fun NavHostContainer(navController: NavHostController, padding: PaddingValues) {
+fun NavHostContainer(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = "home",
-        modifier = Modifier.padding(paddingValues = padding),
     ){
         composable("home") {
             HomeScreen(navController)
@@ -78,7 +81,7 @@ fun NavHostContainer(navController: NavHostController, padding: PaddingValues) {
         })){
             val jobId = it.arguments?.getString("jobId")
             jobId?.let {
-                JobDetailsScreen(jobId = jobId )
+                JobDetails(jobId = jobId, navController)
 
             }
 

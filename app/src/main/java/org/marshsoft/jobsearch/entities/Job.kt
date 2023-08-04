@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 class Job (
         @PrimaryKey val id:Long,
         val jobTitle: String,
-        val description: String,
+        val jobDescription: String,
         val jobType: String,
         val jobPostDate: String,
         val location: String,
